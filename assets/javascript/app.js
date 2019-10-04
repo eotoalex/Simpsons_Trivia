@@ -7,6 +7,7 @@ var incorrect = 0;
 var lives = 5;
 var paused = false;
 var score = 0;
+var chances = 2;
 
 // Array of questions.
 
@@ -156,6 +157,7 @@ function pauseButton (val){
             function reset (){
                 counter++;
                 timer=60;
+                chances = 2
 
             }
  
@@ -165,6 +167,7 @@ function pauseButton (val){
     $("button").on("click", function (event){
         event.preventDefault();
         var clickedButton = $(this).val();
+        
         
         if (clickedButton === "false" ){
             paused=true;
@@ -179,9 +182,23 @@ function pauseButton (val){
             score++;
             reset();
             minuteDecrement ()
+        }
+        else if (clickedButton !== answers[counter].correctAns){
+            chances--
+            console.log(chances)
 
+            
+            
+        }
+        else if(chances === 0){
+            lives--;
+            reset();
+            minuteDecrement ()
+            
+            console.log(chances)
+            
+        }
 
-        }else{console.log("Need to Debug")}
 // This section passes the clicks to a function to be evaluated.
 
 
