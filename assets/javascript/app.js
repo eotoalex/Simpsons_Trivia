@@ -1,3 +1,15 @@
+
+
+
+$(document).ready(function(){
+    clearInterval();
+    $(".display").fadeIn('10000');
+    $("h1").fadeIn('10000');
+    $(".choices").fadeIn('10000');
+    $("#display-image").fadeIn('10000');
+
+    });
+
 // Variables
 
 var counter = 0;
@@ -121,37 +133,8 @@ answers = [
 
 
 
-// This is the timer function.
-function minuteDecrement () {
-    
-    $("#timer").text("Time:"+timer);
-    $("#lives").text("Lives:"+lives)
-    $("#score").text("Score:"+score)
-    displayChoices(counter);
-    displayQuestions(counter);
-    imageGifDisplay(counter)
-    
-    
-    if (!paused){
-    timer--;
-    
 
-    if(timer< 0){
-        counter++;
-        lives--;
-        timer = 60;
-        console.log("Counter"+counter,"lives"+lives)
-    }else if(lives === 0){
-        setTimeout(delay,1000)
-        function delay (){
-            counter=0;
-            lives=5;
-            timer=60;
-        alert("You have lost all your lives. Game Over.");
-        }
-    }
-}
-}
+
 
 // These functions consist of the pause button and the display of both the questions and the choices.
 
@@ -184,12 +167,9 @@ function pauseButton (val){
     }
 
         function displayQuestions (countVal) {
-    var question = questionsArr[countVal];
-   
-    $("#display-question").text(question);
-    
-    
-
+            var question = questionsArr[countVal];
+            $("#display-question").text(question);
+            
         }
 
             function reset (){
@@ -199,32 +179,72 @@ function pauseButton (val){
 
             }
 
+                // This function generates the images/gifs on the page.
                 function imageGifDisplay(countVal){
                     var img = answers[countVal].img;
                     var alt = answers[countVal].alt;
                     var animate = answers[countVal].animated;
                     var wrongAns = "/assets/images/thumbsdown.gif";
-                    // Create image div with attributes still and animated
+
+                    // Creates image div with attributes still,animated, and losing animation (thumbs down gif).
                     $("#display-image").html("<img src="+img+" alt="+alt+" />")
                     
-                    if (chances === 0){
-                    $("#my-form").hide();
-                    
-                    $("#display-image").html("<img src="+wrongAns+" alt="+alt+" />");setInterval(loseIncrement, 2000)
 
+                    while (chances === 0){
+                    $("#grid").html("<img src="+wrongAns+" alt="+alt+" />");
+                    
+                    var youLose = $("#display-image").html("<img src="+img+" alt="+alt+" />")
+                        var y = setInterval(loseIncrement,2000)
+                         
+                        chances = 2;
+                        
                     }
                 }
+
+                    // This function times the gifs on the page.
                     function loseIncrement (){
                     loserTimer--;
                     if(loserTimer === 0){
-                        reset();
-                        $("#my-form").show();
-                        $("#display-image").html("<img src="+img+" alt="+alt+" />")
-                        loseIncrement.clearInterval();
-                        loserTime = 2;
+                    
+                       console.log(loserTimer)
+                        
+
                     }
                     console.log(loserTimer)
                     }
+
+                        function pageGenerator (){
+        
+                            $("#timer").text("Time:"+timer);
+                            $("#lives").text("Lives:"+lives)
+                            $("#score").text("Score:"+score)
+                            displayChoices(counter);
+                            displayQuestions(counter);
+                            imageGifDisplay(counter);
+                        }
+
+                        // This is the timer function.
+                            function minuteDecrement () {
+                            pageGenerator ();
+
+                                if (!paused){
+                                    timer--;
+                                if(timer < 0){
+                                    counter++;
+                                    lives--;
+                                    timer = 60;
+                                }   
+                                else if(lives === 0){
+                                setTimeout(delay,1000)
+                                function delay (){
+                                    counter=0;
+                                    lives=5;
+                                    timer=60;
+                                alert("You have lost all your lives. Game Over.");
+                                }
+                                }
+                            }
+                            }
  
 
 // This click watches to see which choice is clicked or if the pause is initiated.
@@ -243,7 +263,8 @@ function pauseButton (val){
             $(".pause").attr("value","false")
         }
         else if(clickedButton === answers[counter].correctAns){
-            console.log("This work");
+            // console.log("This work");
+            
             score++;
             
             reset();
@@ -279,7 +300,7 @@ function pauseButton (val){
         
 
         
-        
+
         
    
 // These are the calls to the functions to set the timer, display the question, display the choices, and the answer check function.

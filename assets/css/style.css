@@ -1,11 +1,11 @@
 body {
-    /* background-color:teal; */
+    background-color:teal;
 }
 
-#container{
+/* #container{
    margin:auto;
    display:block;
-}
+} */
 
 /* #grid {
 margin:auto;
@@ -21,17 +21,28 @@ margin:auto;
 
 
 
-/* #display-questions{
-    grid-area:main;
-}
-#choices{
-grid-area:main;
-} */
 
-.container {
-    align-content:center;
+#display-question{
+display:"hide";
+} 
+
+.display {
+    display:none;
+}
+
+h1{
+    display:none;
+}
+
+.choices{
+    display:none;
+}
+
+#display-image{
+    display:none;
 }
 
 h1 {
     font-size:30px;
 }
+
