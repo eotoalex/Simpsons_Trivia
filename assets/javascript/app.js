@@ -44,7 +44,8 @@ answers = [
     correctAns:"1",
     img:"/assets/images/HansMoleman.jpg",
     animated:"/assets/images/molemanfootball.gif",
-    alt: "Image of Hans Moleman"
+    alt: "Image of Hans Moleman",
+    blackBox:"/assets/images/thumbsdown.gif"
                             },
     {choice1:"Max Stone",
     choice2: "Armin Temzarian",
@@ -53,7 +54,8 @@ answers = [
     correctAns:"2",
     img:"/assets/images/skinner.jpg",
     animated:"/assets/images/Armin.jpg",
-    alt: "Bad ass Principal Skinner"
+    alt: "Bad ass Principal Skinner",
+    blackBox:"/assets/images/thumbsdown.gif"
                             },
     {choice1:"123 Fake Street",
     choice2: "Evergreen Avenue",
@@ -62,7 +64,8 @@ answers = [
     correctAns:"4",
     img:"/assets/images/license.png",
     animated:"/assets/images/dancinghomer.gif",
-    alt: "Proof of Homer's address."
+    alt: "Proof of Homer's address.",
+    blackBox:"/assets/images/thumbsdown.gif"
                             },
     {choice1:"Hobo",
     choice2: "Fomo",
@@ -71,7 +74,8 @@ answers = [
     correctAns:"3",
     img:"/assets/images/bobo.jpg",
     animated:"/assets/images/burnsandbobo.gif",
-    alt: "Mr.Burns as a kid."
+    alt: "Mr.Burns as a kid.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     {choice1:"Kill Maggy Simpson.",
     choice2: "Release the hounds.",
@@ -80,7 +84,8 @@ answers = [
     correctAns:"3",
     img:"/assets/images/Mr.Burns1.jpg",
     animated:"/assets/images/burnsblocksun.gif",
-    alt: "Maniacal Mr. Burns picture."
+    alt: "Maniacal Mr. Burns picture.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     {choice1:"SideShow Mel",
     choice2: "SideShow Bob",
@@ -89,7 +94,8 @@ answers = [
     correctAns:"2",
     img:"/assets/images/sideshowandbart.jpg",
     animated:"/assets/images/sideshowbob.gif",
-    alt: "Sideshow Bob gif getting hit by rakes."
+    alt: "Sideshow Bob gif getting hit by rakes.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     {choice1:"BleedingGums Murphy",
     choice2: "Kenny G",
@@ -98,7 +104,8 @@ answers = [
     correctAns:"1",
     img:"/assets/images/bleedinggumsmurphy.png",
     animated:"/assets/images/bgmgif.jpg",
-    alt: "Image of bleeding gums murphy."
+    alt: "Image of bleeding gums murphy.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     {choice1:"Hi Doctor Nick!",
     choice2: "Hi Doctor Hibert",
@@ -107,7 +114,8 @@ answers = [
     correctAns:"1",
     img:"/assets/images/docnick.png",
     animated:"/assets/images/dancingnick.gif",
-    alt: "Doctor Nick."
+    alt: "Doctor Nick.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     {choice1:"Try to get with Milhouse's mom.",
     choice2: "Surgery",
@@ -116,7 +124,8 @@ answers = [
     correctAns:"4",
     img:"/assets/images/dochibbert.jpg",
     animated:"/assets/images/dancinghibbert.jpg",
-    alt: "Doctor hibber giggling."
+    alt: "Doctor hibbert giggling.",
+    blackBox:"/assets/images/thumbsdown.gif"
 
                              },
     {choice1:"The Stone Throwers",
@@ -126,7 +135,8 @@ answers = [
     correctAns:"3",
     img:"/assets/images/stoneCutters.jpg",
     animated:"/assets/images/ghostundies.gif",
-    alt: "image of stonecutters."
+    alt: "image of stonecutters.",
+    blackBox:"/assets/images/thumbsdown.gif"
                              },
     
 ];
@@ -176,6 +186,7 @@ function pauseButton (val){
                 counter++;
                 timer=60;
                 chances = 2
+                
 
             }
 
@@ -184,19 +195,23 @@ function pauseButton (val){
                     var img = answers[countVal].img;
                     var alt = answers[countVal].alt;
                     var animate = answers[countVal].animated;
-                    var wrongAns = "/assets/images/thumbsdown.gif";
+                    var blackBox = answers[countVal].blackBox;
+                    
+                    var imageClass= "image-inserts"
 
                     // Creates image div with attributes still,animated, and losing animation (thumbs down gif).
-                    $("#display-image").html("<img src="+img+" alt="+alt+" />")
+                    
+                    $("#display-image").attr("src", img );
+                    $("#display-image").attr("alt", alt );
+                    $("#display-image").attr("data", animate);
+                    $("#display-image").attr("negative", blackBox)
+                    
                     
 
-                    while (chances === 0){
-                    $("#grid").html("<img src="+wrongAns+" alt="+alt+" />");
+                    if (chances === 0){
+                    // $("#display-image").attr("src"," /assets/images/thumbs-down.jpg />");
+                    // $("#display-image").attr("alt", "thumbs down.")
                     
-                    var youLose = $("#display-image").html("<img src="+img+" alt="+alt+" />")
-                        var y = setInterval(loseIncrement,2000)
-                         
-                        chances = 2;
                         
                     }
                 }
@@ -252,6 +267,10 @@ function pauseButton (val){
     $("button").on("click", function (event){
         event.preventDefault();
         var clickedButton = $(this).val();
+        var animate = $("#display-image").attr("data")
+        var thumbsDown = $("#display-image").attr("negative");
+        var correctAnswer = answers[counter].correctAns;
+        
         
         
         if (clickedButton === "false" ){
@@ -263,30 +282,37 @@ function pauseButton (val){
             $(".pause").attr("value","false")
         }
         else if(clickedButton === answers[counter].correctAns){
-            // console.log("This work");
+            setTimeout(pageGenerator,3120);
             
+            $("#display-image").attr("src", animate )
             score++;
-            
             reset();
-            minuteDecrement ()
+            // minuteDecrement ()
+            console.log(animate)
         }
         else if (clickedButton !== answers[counter].correctAns){
-            chances--
-            console.log(chances)
-
-            
-            
-        }
-        else if(chances === 0){
-            lives--;
+            setTimeout(pageGenerator,3120);
+            $("#display-image").attr("src",thumbsDown);
+            // $("#display-image").attr("alt", "thumbs down.")
             reset();
-            minuteDecrement ()
+            minuteDecrement ();
+            console.log("The Wrong answer was pressed");
+
+           
+
             
-            console.log(chances)
             
         }
+        // else if(chances === 0){
+        //     lives--;
+        //     reset();
+        //     minuteDecrement ()
+            
+        //     console.log(chances)
+            
+        // }
 
-// This section passes the clicks to a function to be evaluated.
+console.log(clickedButton,correctAnswer);
 
 
     
@@ -306,7 +332,7 @@ function pauseButton (val){
 // These are the calls to the functions to set the timer, display the question, display the choices, and the answer check function.
 
 
-setInterval(minuteDecrement, 1000)
+// setInterval(minuteDecrement, 1000)
 minuteDecrement();
 
 
