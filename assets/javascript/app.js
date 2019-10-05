@@ -280,13 +280,18 @@ function pauseButton (val){
             $(".pause").attr("value","false")
         }
         else if(clickedButton === answers[counter].correctAns){
-            setTimeout(function(){pageGenerator(); timer=60;},3120);
+            // $(this).val() = void(0);
+            setTimeout(function(){
+                pageGenerator(); 
+                timer=60; },3120);
             $("#display-image").attr("src", animate);
             score++; 
             reset();
         }
         else if (clickedButton !== answers[counter].correctAns){
-            setTimeout(function(){pageGenerator(); timer=60;},3120);
+            setTimeout(function(){
+                pageGenerator(); 
+                timer=60;},3120);
             $("#display-image").attr("src",thumbsDown);
             reset();
             lives--;

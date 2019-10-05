@@ -1,5 +1,6 @@
 body {
     background-color:teal;
+    margin:40px;
 }
 
 #container{
@@ -8,6 +9,13 @@ body {
 }
 
  /* #grid {} */
+
+ #background-image{
+    height:500px;
+    float:right;
+    opacity:0.5
+    right:20px;
+ }
     
 
                         
