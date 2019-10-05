@@ -53,7 +53,7 @@ answers = [
     choice4: "Benicio del Toro",
     correctAns:"2",
     img:"/assets/images/skinner.jpg",
-    animated:"/assets/images/Armin.jpg",
+    animated:"/assets/images/skinner.gif",
     alt: "Bad ass Principal Skinner",
     blackBox:"/assets/images/thumbsdown.gif"
                             },
@@ -73,7 +73,7 @@ answers = [
     choice4: "Toto",
     correctAns:"3",
     img:"/assets/images/bobo.jpg",
-    animated:"/assets/images/burnsandbobo.gif",
+    animated:"/assets/images/giphy.gif",
     alt: "Mr.Burns as a kid.",
     blackBox:"/assets/images/thumbsdown.gif"
                              },
@@ -103,7 +103,7 @@ answers = [
     choice4: "Sunny Liston",
     correctAns:"1",
     img:"/assets/images/bleedinggumsmurphy.png",
-    animated:"/assets/images/bgmgif.jpg",
+    animated:"/assets/images/th.gif",
     alt: "Image of bleeding gums murphy.",
     blackBox:"/assets/images/thumbsdown.gif"
                              },
@@ -123,7 +123,7 @@ answers = [
     choice4: "Giggle between words.",
     correctAns:"4",
     img:"/assets/images/dochibbert.jpg",
-    animated:"/assets/images/dancinghibbert.jpg",
+    animated:"/assets/images/hibbert.gif",
     alt: "Doctor hibbert giggling.",
     blackBox:"/assets/images/thumbsdown.gif"
 
@@ -295,8 +295,9 @@ function pauseButton (val){
             $("#display-image").attr("src",thumbsDown);
             // $("#display-image").attr("alt", "thumbs down.")
             reset();
-            minuteDecrement ();
-            console.log("The Wrong answer was pressed");
+            lives--;
+            // minuteDecrement ();
+            
 
            
 
