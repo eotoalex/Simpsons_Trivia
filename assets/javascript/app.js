@@ -184,10 +184,6 @@ function pauseButton (val){
 
             function reset (){
                 counter++;
-                timer=60;
-                chances = 2
-                
-
             }
 
                 // This function generates the images/gifs on the page.
@@ -230,7 +226,7 @@ function pauseButton (val){
 
                         function pageGenerator (){
         
-                            $("#timer").text("Time:"+timer);
+                            
                             $("#lives").text("Lives:"+lives)
                             $("#score").text("Score:"+score)
                             displayChoices(counter);
@@ -238,10 +234,9 @@ function pauseButton (val){
                             imageGifDisplay(counter);
                         }
 
-                        // This is the timer function.
                             function minuteDecrement () {
-                            pageGenerator ();
-
+                            
+                            $("#timer").text("Time:"+timer);
                                 if (!paused){
                                     timer--;
                                 if(timer < 0){
@@ -260,9 +255,12 @@ function pauseButton (val){
                                 }
                             }
                             }
- 
 
-// This click watches to see which choice is clicked or if the pause is initiated.
+                            function time (){
+                                timer=60;
+                            }
+
+// This click watches to evaluate each button that is clicked or if the pause is initiated.
 
     $("button").on("click", function (event){
         event.preventDefault();
@@ -282,67 +280,32 @@ function pauseButton (val){
             $(".pause").attr("value","false")
         }
         else if(clickedButton === answers[counter].correctAns){
-            setTimeout(pageGenerator,3120);
-            
-            $("#display-image").attr("src", animate )
-            score++;
+            setTimeout(function(){pageGenerator(); timer=60;},3120);
+            $("#display-image").attr("src", animate);
+            score++; 
             reset();
-            // minuteDecrement ()
-            console.log(animate)
         }
         else if (clickedButton !== answers[counter].correctAns){
-            setTimeout(pageGenerator,3120);
+            setTimeout(function(){pageGenerator(); timer=60;},3120);
             $("#display-image").attr("src",thumbsDown);
-            // $("#display-image").attr("alt", "thumbs down.")
             reset();
             lives--;
-            // minuteDecrement ();
-            
+         }
 
-           
-
-            
-            
-        }
-        // else if(chances === 0){
-        //     lives--;
-        //     reset();
-        //     minuteDecrement ()
-            
-        //     console.log(chances)
-            
-        // }
-
-console.log(clickedButton,correctAnswer);
-
-
-    
-        
     });
 
-    
-// This function makes sure that after 60 seconds or an answer is chosen or time is up, the next question and the next set of choices are displayed for the user.
-        
-        
-        
 
-        
+// These are the calls to the functions to populate the page with the correct questions and corresponding choices.
+pageGenerator ();
 
-        
-   
-// These are the calls to the functions to set the timer, display the question, display the choices, and the answer check function.
-
-
-// setInterval(minuteDecrement, 1000)
+// This sets each questions time.
+setInterval(minuteDecrement, 1000)
+// This function decreases the set time.
 minuteDecrement();
-
-
-// answerCheck ()
+console.log(counter);
 
 
 
-// You can consider resetting the page with a reset button.
-// document.getElementById("myForm").reset();
 
 
 
