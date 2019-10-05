@@ -1,3 +1,37 @@
 body {
-    background-color:teal;
+    /* background-color:teal; */
+}
+
+#container{
+   margin:auto;
+   display:block;
+}
+
+/* #grid {
+margin:auto;
+
+    display:grid;
+    align-content:center;
+    grid-template-rows: 80% 80% 80%;
+    grid-template-columns:35% 35% 35%;
+    justify-items:stretch;
+
+    /* grid-template-areas:  */
+                        
+
+
+
+/* #display-questions{
+    grid-area:main;
+}
+#choices{
+grid-area:main;
+} */
+
+.container {
+    align-content:center;
+}
+
+h1 {
+    font-size:30px;
 }

@@ -8,6 +8,7 @@ var lives = 5;
 var paused = false;
 var score = 0;
 var chances = 2;
+var loserTimer=3;
 
 // Array of questions.
 
@@ -24,65 +25,96 @@ questionsArr = ["In the Simpsons, what is this character's name?",
 
 // Arrays of answers.
 answers = [
-    {choice1:"Hobbs Moman",
+    {choice1:"Hans Moleman",
     choice2: "Billy Crystal",
     choice3: "Moe Sislack",
     choice4: "Abe Simpson",
-    correctAns:"1"
+    correctAns:"1",
+    img:"/assets/images/HansMoleman.jpg",
+    animated:"/assets/images/molemanfootball.gif",
+    alt: "Image of Hans Moleman"
                             },
     {choice1:"Max Stone",
     choice2: "Armin Temzarian",
     choice3: "Armen Hammer",
     choice4: "Benicio del Toro",
-    correctAns:"2"
+    correctAns:"2",
+    img:"/assets/images/skinner.jpg",
+    animated:"/assets/images/Armin.jpg",
+    alt: "Bad ass Principal Skinner"
                             },
     {choice1:"123 Fake Street",
     choice2: "Evergreen Avenue",
     choice3: "1600 Pennsylvania Avenue",
     choice4: "742 Evergreen Terrace",
-    correctAns:"4"
+    correctAns:"4",
+    img:"/assets/images/license.png",
+    animated:"/assets/images/dancinghomer.gif",
+    alt: "Proof of Homer's address."
                             },
     {choice1:"Hobo",
     choice2: "Fomo",
     choice3: "Bobo",
     choice4: "Toto",
-    correctAns:"3"
+    correctAns:"3",
+    img:"/assets/images/bobo.jpg",
+    animated:"/assets/images/burnsandbobo.gif",
+    alt: "Mr.Burns as a kid."
                              },
     {choice1:"Kill Maggy Simpson.",
     choice2: "Release the hounds.",
     choice3: "Create a machine to block out the sun.",
     choice4: "Marry Smithers.",
-    correctAns:"3"
+    correctAns:"3",
+    img:"/assets/images/Mr.Burns1.jpg",
+    animated:"/assets/images/burnsblocksun.gif",
+    alt: "Maniacal Mr. Burns picture."
                              },
     {choice1:"SideShow Mel",
     choice2: "SideShow Bob",
     choice3: "SideShow Tod",
     choice4: "SideShow Phil",
-    correctAns:"2"
+    correctAns:"2",
+    img:"/assets/images/sideshowandbart.jpg",
+    animated:"/assets/images/sideshowbob.gif",
+    alt: "Sideshow Bob gif getting hit by rakes."
                              },
     {choice1:"BleedingGums Murphy",
     choice2: "Kenny G",
     choice3: "BB King",
     choice4: "Sunny Liston",
-    correctAns:"1"
+    correctAns:"1",
+    img:"/assets/images/bleedinggumsmurphy.png",
+    animated:"/assets/images/bgmgif.jpg",
+    alt: "Image of bleeding gums murphy."
                              },
     {choice1:"Hi Doctor Nick!",
     choice2: "Hi Doctor Hibert",
     choice3: "Hi Doctor Marvin Monroe",
     choice4: "Hi Doctor Sebi",
-    correctAns:"1"
+    correctAns:"1",
+    img:"/assets/images/docnick.png",
+    animated:"/assets/images/dancingnick.gif",
+    alt: "Doctor Nick."
                              },
     {choice1:"Try to get with Milhouse's mom.",
     choice2: "Surgery",
     choice3: "Get angry.",
     choice4: "Giggle between words.",
-    correctAns:"4"
+    correctAns:"4",
+    img:"/assets/images/dochibbert.jpg",
+    animated:"/assets/images/dancinghibbert.jpg",
+    alt: "Doctor hibber giggling."
+
                              },
     {choice1:"The Stone Throwers",
     choice2: "The Rollling Stoners",
     choice3: "The Stone Cutters",
     choice4: "The Stone Masons",
-    correctAns:"3"
+    correctAns:"3",
+    img:"/assets/images/stoneCutters.jpg",
+    animated:"/assets/images/ghostundies.gif",
+    alt: "image of stonecutters."
                              },
     
 ];
@@ -91,11 +123,14 @@ answers = [
 
 // This is the timer function.
 function minuteDecrement () {
+    
     $("#timer").text("Time:"+timer);
     $("#lives").text("Lives:"+lives)
     $("#score").text("Score:"+score)
     displayChoices(counter);
     displayQuestions(counter);
+    imageGifDisplay(counter)
+    
     
     if (!paused){
     timer--;
@@ -150,7 +185,10 @@ function pauseButton (val){
 
         function displayQuestions (countVal) {
     var question = questionsArr[countVal];
+   
     $("#display-question").text(question);
+    
+    
 
         }
 
@@ -160,6 +198,33 @@ function pauseButton (val){
                 chances = 2
 
             }
+
+                function imageGifDisplay(countVal){
+                    var img = answers[countVal].img;
+                    var alt = answers[countVal].alt;
+                    var animate = answers[countVal].animated;
+                    var wrongAns = "/assets/images/thumbsdown.gif";
+                    // Create image div with attributes still and animated
+                    $("#display-image").html("<img src="+img+" alt="+alt+" />")
+                    
+                    if (chances === 0){
+                    $("#my-form").hide();
+                    
+                    $("#display-image").html("<img src="+wrongAns+" alt="+alt+" />");setInterval(loseIncrement, 2000)
+
+                    }
+                }
+                    function loseIncrement (){
+                    loserTimer--;
+                    if(loserTimer === 0){
+                        reset();
+                        $("#my-form").show();
+                        $("#display-image").html("<img src="+img+" alt="+alt+" />")
+                        loseIncrement.clearInterval();
+                        loserTime = 2;
+                    }
+                    console.log(loserTimer)
+                    }
  
 
 // This click watches to see which choice is clicked or if the pause is initiated.
@@ -180,6 +245,7 @@ function pauseButton (val){
         else if(clickedButton === answers[counter].correctAns){
             console.log("This work");
             score++;
+            
             reset();
             minuteDecrement ()
         }
