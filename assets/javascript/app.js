@@ -42,6 +42,7 @@ answers = [
     choice3: "Moe Sislack",
     choice4: "Abe Simpson",
     correctAns:"1",
+    displayAnswer: "Hans Moleman",
     img:"assets/images/HansMoleman.jpg",
     animated:"assets/images/molemanfootball.gif",
     alt: "Image of Hans Moleman",
@@ -52,6 +53,7 @@ answers = [
     choice3: "Armen Hammer",
     choice4: "Benicio del Toro",
     correctAns:"2",
+    displayAnswer: "Armin Temzarian",
     img:"assets/images/skinner.jpg",
     animated:"assets/images/skinner.gif",
     alt: "Bad ass Principal Skinner",
@@ -62,6 +64,7 @@ answers = [
     choice3: "1600 Pennsylvania Avenue",
     choice4: "742 Evergreen Terrace",
     correctAns:"4",
+    displayAnswer: "742 Evergreen Terrace",
     img:"assets/images/license.png",
     animated:"assets/images/dancinghomer.gif",
     alt: "Proof of Homer's address.",
@@ -72,6 +75,7 @@ answers = [
     choice3: "Bobo",
     choice4: "Toto",
     correctAns:"3",
+    displayAnswer: "Bobo",
     img:"assets/images/bobo.jpg",
     animated:"assets/images/giphy.gif",
     alt: "Mr.Burns as a kid.",
@@ -82,6 +86,7 @@ answers = [
     choice3: "Create a machine to block out the sun.",
     choice4: "Marry Smithers.",
     correctAns:"3",
+    displayAnswer: "Create a machine to block out the sun.",
     img:"assets/images/Mr.Burns1.jpg",
     animated:"assets/images/burnsblocksun.gif",
     alt: "Maniacal Mr. Burns picture.",
@@ -92,6 +97,7 @@ answers = [
     choice3: "SideShow Tod",
     choice4: "SideShow Phil",
     correctAns:"2",
+    displayAnswer: "SideShow Bob",
     img:"assets/images/sideshowandbart.jpg",
     animated:"assets/images/sideshowbob.gif",
     alt: "Sideshow Bob gif getting hit by rakes.",
@@ -102,6 +108,7 @@ answers = [
     choice3: "BB King",
     choice4: "Sunny Liston",
     correctAns:"1",
+    displayAnswer: "BleedingGums Murphy",
     img:"assets/images/bleedinggumsmurphy.png",
     animated:"assets/images/th.gif",
     alt: "Image of bleeding gums murphy.",
@@ -112,6 +119,7 @@ answers = [
     choice3: "Hi Doctor Marvin Monroe",
     choice4: "Hi Doctor Sebi",
     correctAns:"1",
+    displayAnswer: "Hi Doctor Nick!",
     img:"assets/images/docnick.png",
     animated:"assets/images/dancingnick.gif",
     alt: "Doctor Nick.",
@@ -122,6 +130,7 @@ answers = [
     choice3: "Get angry.",
     choice4: "Giggle between words.",
     correctAns:"4",
+    displayAnswer: "Giggle between words.",
     img:"assets/images/dochibbert.jpg",
     animated:"assets/images/hibbert.gif",
     alt: "Doctor hibbert giggling.",
@@ -133,6 +142,7 @@ answers = [
     choice3: "The Stone Cutters",
     choice4: "The Stone Masons",
     correctAns:"3",
+    displayAnswer: "The Stone Cutters",
     img:"assets/images/stoneCutters.jpg",
     animated:"assets/images/ghostundies.gif",
     alt: "image of stonecutters.",
@@ -192,6 +202,8 @@ function pauseButton (val){
                     var alt = answers[countVal].alt;
                     var animate = answers[countVal].animated;
                     var blackBox = answers[countVal].blackBox;
+                    var displayCorrectAnswer = answers[countVal].displayAnswer;
+                    var correctAns = answers[counter].correctAns;
                     
                     var imageClass= "image-inserts"
 
@@ -200,7 +212,9 @@ function pauseButton (val){
                     $("#display-image").attr("src", img );
                     $("#display-image").attr("alt", alt );
                     $("#display-image").attr("data", animate);
-                    $("#display-image").attr("negative", blackBox)
+                    $("#display-image").attr("negative", blackBox);
+                    $("#display-correct-answer").attr("")
+                //   add an empty text spot so that while no conditions are run the user cannot see correct answer.
                     
                     
 
@@ -267,7 +281,9 @@ function pauseButton (val){
         var clickedButton = $(this).val();
         var animate = $("#display-image").attr("data")
         var thumbsDown = $("#display-image").attr("negative");
-        var correctAnswer = answers[counter].correctAns;
+        var correctAnswer = $("#display-correct-answer").attr("#text");
+        var correctAns = answers[counter].correctAns;
+        
         
         
         
@@ -279,8 +295,8 @@ function pauseButton (val){
             paused=false;
             $(".pause").attr("value","false")
         }
-        else if(clickedButton === answers[counter].correctAns){
-            // $(this).val() = void(0);
+        else if(clickedButton === correctAns){
+            
             setTimeout(function(){
                 pageGenerator(); 
                 timer=60; },3120);
@@ -288,11 +304,15 @@ function pauseButton (val){
             score++; 
             reset();
         }
-        else if (clickedButton !== answers[counter].correctAns){
+        else if (clickedButton !== correctAns){
+            console.log(clickedButton, correctAns);
             setTimeout(function(){
                 pageGenerator(); 
                 timer=60;},3120);
             $("#display-image").attr("src",thumbsDown);
+            //$("#display-correct-answer").display()
+            $("#display-correct-answer").text(correctAnswer);
+            
             reset();
             lives--;
          }
