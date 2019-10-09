@@ -13,10 +13,10 @@ $(document).ready(function(){
 // Variables
 
 var counter = 0;
-var timer = 60;
+var timer = 30;
 var correct = 0;
 var incorrect = 0;
-var lives = 5;
+var lives = 3;
 var paused = false;
 var score = 0;
 var chances = 2;
@@ -202,8 +202,8 @@ function pauseButton (val){
                     var alt = answers[countVal].alt;
                     var animate = answers[countVal].animated;
                     var blackBox = answers[countVal].blackBox;
-                    var displayCorrectAnswer = answers[countVal].displayAnswer;
-                    var correctAns = answers[counter].correctAns;
+                    // var displayCorrectAnswer = answers[countVal].displayAnswer;
+                    // var correctAns = answers[counter].correctAns;
                     
                     var imageClass= "image-inserts"
 
@@ -254,24 +254,35 @@ function pauseButton (val){
                                 if (!paused){
                                     timer--;
                                 if(timer < 0){
-                                    counter++;
                                     lives--;
-                                    timer = 60;
+                                    timer = 30;
+                                    $("#lives").text("Lives:" +lives);
+                                    reset();
+                                    pageGenerator ();
+
                                 }   
                                 else if(lives === 0){
-                                setTimeout(delay,1000)
+                                setTimeout(delay,1000);
                                 function delay (){
                                     counter=0;
-                                    lives=5;
-                                    timer=60;
-                                alert("You have lost all your lives. Game Over.");
+                                    lives=3;
+                                    timer=30;
+                                alert("You have lost all your lives. You scored "+score+" points.");
                                 }
+                                }
+                                else if(score>9){
+                                    setTimeout(win,1000);
+                                    function win (){
+                                        alert("Great job. You completed the game with a score of "+ score+ " points");
+                                    }
+
+
                                 }
                             }
                             }
 
                             function time (){
-                                timer=60;
+                                timer=30;
                             }
 
 // This click watches to evaluate each button that is clicked or if the pause is initiated.
@@ -299,7 +310,7 @@ function pauseButton (val){
             
             setTimeout(function(){
                 pageGenerator(); 
-                timer=60; },3120);
+                timer=30; },3120);
             $("#display-image").attr("src", animate);
             score++; 
             reset();
@@ -308,9 +319,8 @@ function pauseButton (val){
             console.log(clickedButton, correctAns);
             setTimeout(function(){
                 pageGenerator(); 
-                timer=60;},3120);
+                timer=30;},3120);
             $("#display-image").attr("src",thumbsDown);
-            //$("#display-correct-answer").display()
             $("#display-correct-answer").text(correctAnswer);
             
             reset();
