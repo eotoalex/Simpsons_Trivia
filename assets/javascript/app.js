@@ -143,7 +143,7 @@ answers = [
     choice4: "The Stone Masons",
     correctAns:"3",
     displayAnswer: "The Stone Cutters",
-    img:"assets/images/stoneCutters.jpg",
+    img:"assets/images/StoneCutters.jpg",
     animated:"assets/images/ghostundies.gif",
     alt: "image of stonecutters.",
     blackBox:"assets/images/thumbsdown.gif"
