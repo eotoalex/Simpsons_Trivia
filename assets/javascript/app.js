@@ -151,193 +151,141 @@ answers = [
     
 ];
 
-
-
-
-
-
 // These functions consist of the pause button and the display of both the questions and the choices.
-
 function pauseButton (val){
-    
     if (val === "false" ){
         paused=true;
-    $(".pause").attr("value","true")
-        
-        
+    $(".pause").attr("value","true") 
     }else if(val === "true"){
         paused=false;
         $(".pause").attr("value","false")
     }
-    
+};
 
-
-
-}
-
-    function displayChoices (countVal){
-    
+function displayChoices (countVal){    
     $(".choice1").html("<button>" + answers[countVal].choice1 + "</button>")
     $(".choice2").html("<button>" + answers[countVal].choice2 + "</button>")
     $(".choice3").html("<button>" + answers[countVal].choice3 + "</button>")
     $(".choice4").html("<button>" + answers[countVal].choice4 + "</button>")
-    
-    
+};
 
-    }
+function displayQuestions (countVal) {
+    var question = questionsArr[countVal];
+    $("#display-question").text(question);  
+};
 
-        function displayQuestions (countVal) {
-            var question = questionsArr[countVal];
-            $("#display-question").text(question);
-            
-        }
-
-            function reset (){
-                counter++;
-            }
+function reset (){
+    counter++;
+}
 
                 // This function generates the images/gifs on the page.
-                function imageGifDisplay(countVal){
-                    var img = answers[countVal].img;
-                    var alt = answers[countVal].alt;
-                    var animate = answers[countVal].animated;
-                    var blackBox = answers[countVal].blackBox;
-                    // var displayCorrectAnswer = answers[countVal].displayAnswer;
-                    // var correctAns = answers[counter].correctAns;
-                    
-                    var imageClass= "image-inserts"
+function imageGifDisplay(countVal){
+    var img = answers[countVal].img;
+    var alt = answers[countVal].alt;
+    var animate = answers[countVal].animated;
+    var blackBox = answers[countVal].blackBox;
+    var imageClass= "image-inserts"
+    $("#display-image").attr("src", img );
+    $("#display-image").attr("alt", alt );
+    $("#display-image").attr("data", animate);
+    $("#display-image").attr("negative", blackBox);
+    $("#display-correct-answer").attr("");
+    if (chances === 0){
+    // $("#display-image").attr("src"," /assets/images/thumbs-down.jpg />");
+    // $("#display-image").attr("alt", "thumbs down.") 
+    }
+}
 
-                    // Creates image div with attributes still,animated, and losing animation (thumbs down gif).
-                    
-                    $("#display-image").attr("src", img );
-                    $("#display-image").attr("alt", alt );
-                    $("#display-image").attr("data", animate);
-                    $("#display-image").attr("negative", blackBox);
-                    $("#display-correct-answer").attr("")
-                //   add an empty text spot so that while no conditions are run the user cannot see correct answer.
-                    
-                    
+// This function times the gifs on the page.
+function loseIncrement (){
+    loserTimer--;
+    if(loserTimer === 0){
+        console.log(loserTimer)
+    }
+    console.log(loserTimer)
+};
 
-                    if (chances === 0){
-                    // $("#display-image").attr("src"," /assets/images/thumbs-down.jpg />");
-                    // $("#display-image").attr("alt", "thumbs down.")
-                    
-                        
-                    }
-                }
+function pageGenerator (){
+    $("#lives").text("Lives:"+lives)
+    $("#score").text("Score:"+score)
+    displayChoices(counter);
+    displayQuestions(counter);
+    imageGifDisplay(counter);
+};
 
-                    // This function times the gifs on the page.
-                    function loseIncrement (){
-                    loserTimer--;
-                    if(loserTimer === 0){
-                    
-                       console.log(loserTimer)
-                        
+function minuteDecrement () {
+    $("#timer").text("Time:"+timer);
+    if (!paused){
+        timer--;
+    if(timer < 0){
+        lives--;
+        timer = 30;
+        $("#lives").text("Lives:" +lives);
+        reset();
+        pageGenerator ();
+    } else if(lives === 0){
+        setTimeout(delay,1000);
+        function delay (){
+        counter=0;
+        lives=3;
+        timer=30;
+        alert("You have lost all your lives. You scored "+score+" points.");
+        };
+    } else if(score>9){
+        setTimeout(win,1000);
+        function win (){
+            alert("Great job. You completed the game with a score of "+ score+ " points");
+        };
+      }
+    }
+};
 
-                    }
-                    console.log(loserTimer)
-                    }
-
-                        function pageGenerator (){
-        
-                            
-                            $("#lives").text("Lives:"+lives)
-                            $("#score").text("Score:"+score)
-                            displayChoices(counter);
-                            displayQuestions(counter);
-                            imageGifDisplay(counter);
-                        }
-
-                            function minuteDecrement () {
-                            
-                            $("#timer").text("Time:"+timer);
-                                if (!paused){
-                                    timer--;
-                                if(timer < 0){
-                                    lives--;
-                                    timer = 30;
-                                    $("#lives").text("Lives:" +lives);
-                                    reset();
-                                    pageGenerator ();
-
-                                }   
-                                else if(lives === 0){
-                                setTimeout(delay,1000);
-                                function delay (){
-                                    counter=0;
-                                    lives=3;
-                                    timer=30;
-                                alert("You have lost all your lives. You scored "+score+" points.");
-                                }
-                                }
-                                else if(score>9){
-                                    setTimeout(win,1000);
-                                    function win (){
-                                        alert("Great job. You completed the game with a score of "+ score+ " points");
-                                    }
-
-
-                                }
-                            }
-                            }
-
-                            function time (){
-                                timer=30;
-                            }
+function time (){
+    timer=30;
+}
 
 // This click watches to evaluate each button that is clicked or if the pause is initiated.
 
-    $("button").on("click", function (event){
-        event.preventDefault();
-        var clickedButton = $(this).val();
-        var animate = $("#display-image").attr("data")
-        var thumbsDown = $("#display-image").attr("negative");
-        var correctAnswer = $("#display-correct-answer").attr("#text");
-        var correctAns = answers[counter].correctAns;
-        
-        
-        
-        
-        if (clickedButton === "false" ){
-            paused=true;
-        $(".pause").attr("value","true")  
-        }
-        else if(clickedButton === "true"){
-            paused=false;
-            $(".pause").attr("value","false")
-        }
-        else if(clickedButton === correctAns){
-            
+$("button").on("click", function (event){
+    event.preventDefault();
+    var clickedButton = $(this).val();
+    var animate = $("#display-image").attr("data")
+    var thumbsDown = $("#display-image").attr("negative");
+    var correctAnswer = $("#display-correct-answer").attr("#text");
+    var correctAns = answers[counter].correctAns;
+    
+    if (clickedButton === "false" ){
+        paused=true;
+    $(".pause").attr("value","true")  
+    } else if(clickedButton === "true"){
+        paused=false;
+        $(".pause").attr("value","false")
+      } else if(clickedButton === correctAns){
             setTimeout(function(){
-                pageGenerator(); 
-                timer=30; },3120);
+            pageGenerator(); 
+            timer=30; },3120);
             $("#display-image").attr("src", animate);
             score++; 
             reset();
-        }
-        else if (clickedButton !== correctAns){
+        } else if (clickedButton !== correctAns){
             console.log(clickedButton, correctAns);
             setTimeout(function(){
                 pageGenerator(); 
                 timer=30;},3120);
             $("#display-image").attr("src",thumbsDown);
             $("#display-correct-answer").text(correctAnswer);
-            
             reset();
             lives--;
-         }
+        }
 
-    });
-
+});
 
 // These are the calls to the functions to populate the page with the correct questions and corresponding choices.
 pageGenerator ();
-
 // This sets each questions time.
 setInterval(minuteDecrement, 1000)
 // This function decreases the set time.
 minuteDecrement();
-console.log(counter);
 
 
 
